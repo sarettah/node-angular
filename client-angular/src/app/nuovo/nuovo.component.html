@@ -1,19 +1,40 @@
-<h2>Inserisci la tua nuova Nota!</h2>
 
+<div class="content">
+
+<!--<p>{{nuovo}}</p>-->
+<div class="nuovo" *ngIf="nuovo" >
+  <h2>Inserisci la tua nuova Nota!</h2>
 <form class="example-form" >
    <mat-form-field class="example-full-width">
      <mat-label  >Titolo</mat-label>
      <input matInput id="titolo" placeholder="" value=""  [(ngModel)]="titolo"  [ngModelOptions]="{standalone: true}">
    </mat-form-field>
- 
+ <br>
    <mat-form-field class="example-full-width">
      <mat-label  >Descrizione</mat-label>
      <input matInput id="descrizione" [(ngModel)]="descrizione"  [ngModelOptions]="{standalone: true}" >
    </mat-form-field>
-   
-   <mat-form-field class="example-full-width">
-      <mat-label  >Descrizione</mat-label>
-      <input matInput id="descrizione" [(ngModel)]="descrizione"  [ngModelOptions]="{standalone: true}" >
-    </mat-form-field>
+<br>
+   <button mat-raised-button color="primary" (click)="salva()">Aggiungi</button> 
   
  </form>
+</div>
+
+<div class="modifica" *ngIf="!nuovo">
+  <h2>Modifica la tua Nota!</h2>
+  <form class="example-form" >
+     <mat-form-field class="example-full-width">
+       <mat-label  >titolo:</mat-label>
+       <input matInput id="titolo" placeholder="" value=""  [(ngModel)]="titolo"  [ngModelOptions]="{standalone: true}">
+     </mat-form-field>
+   <br>
+     <mat-form-field class="example-full-width">
+       <mat-label  >descrizione:</mat-label>
+       <input matInput id="descrizione" placeholder="" [(ngModel)]="descrizione"  [ngModelOptions]="{standalone: true}" >
+     </mat-form-field>
+  <br>
+     <button mat-raised-button color="primary" (click)="modifica()">Salva</button> 
+    
+   </form>
+  </div>
+  </div>

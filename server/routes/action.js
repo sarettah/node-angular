@@ -16,11 +16,20 @@ router.post('/', function(req, res, next) {
    var json = JSON.parse(body)
    console.log("json: "+JSON.stringify(json));
    
+   var db = mongoUtil.getDb();
    if(json.azione === "elimina"){
       //chiamare il db
-      var db = mongoUtil.getDb();
       functions.eliminaTodo(json.id, db, res)
    }
+   if(json.azione === "aggiungi"){
+      //chiamare il db
+      functions.aggiungiTodo(json.id,json.titolo, json.descrizione, db, res)
+   }
+   if(json.azione === "modifica"){
+      //chiamare il db
+      functions.modificaTodo(json.id,json.titolo, json.descrizione, db, res)
+   }
+
  }); 
 
 });

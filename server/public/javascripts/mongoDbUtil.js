@@ -10,13 +10,13 @@ module.exports = {
   connectToServer: function( callback ) {
     MongoClient.connect( url,  { useNewUrlParser: true, useUnifiedTopology: true  }, function( err, client ) {
       _db  = client.db('ToDo');
-      console.log("db connectToServer: "+_db);
+     // console.log("db connectToServer: "+_db);
       return callback( err );
     } );
   },
 
   getDb: function() {
-   console.log("db getDb: "+_db);
+  // console.log("db getDb: "+_db);
     return _db;
   }
 };

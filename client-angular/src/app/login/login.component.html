@@ -4,12 +4,22 @@
 <h2>Login</h2>
    <!--<span>{{ title }} app is running!</span>-->
    <br>
-   email:    <input type="text" id="email"  [(ngModel)]="email" [ngModelOptions]="{standalone: true}" >
+  <!-- email:    <input type="text" id="email"  [(ngModel)]="email" [ngModelOptions]="{standalone: true}" >
    <br>
    password: <input type="text" id="password" [(ngModel)]="password"  [ngModelOptions]="{standalone: true}" >
    <br>
    <button (click)="login()">login</button>
-   
-
+   -->
+   <mat-form-field class="example-full-width">
+      <mat-label  >Email</mat-label>
+      <input matInput id="email" placeholder="" value=""  [(ngModel)]="email"  [ngModelOptions]="{standalone: true}">
+    </mat-form-field>
+    <br>
+    <mat-form-field class="example-full-width">
+      <mat-label  >Password</mat-label>
+      <input matInput id="password" placeholder="" value=""  [(ngModel)]="password"  [ngModelOptions]="{standalone: true}">
+    </mat-form-field>
+    <br>
+    <button mat-raised-button color="primary" (click)="login()">login</button>
 </div>
 

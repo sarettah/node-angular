@@ -1,13 +1,17 @@
+
+<div class="content" role="main">
 <h2>Home</h2>
 
 <p>questa è la lista dei tuoi impegni!</p>
 
-<button (click)="aggiungiVai()">add nota</button>
+<button mat-raised-button color="primary" (click)="aggiungiVai()">Aggiungi impegno</button>
 
 <ul>
    <li *ngFor="let nota of note">
      {{ nota.titolo }}
-     <button [(ngModel)]="nota.id" ngDefaultControl name="elimina" (click)="elimina(nota._id)">elimina</button>
-     <button [(ngModel)]="nota.id" ngDefaultControl name="modifica" (click)="modifica(nota._id)">modifica</button>
+     <button [(ngModel)]="nota.id" ngDefaultControl name="elimina" (click)="elimina(nota._id)" mat-raised-button color="primary">elimina</button>
+     <button [(ngModel)]="nota.id" ngDefaultControl name="modifica" (click)="modifica(nota._id, nota.titolo, nota.note)" mat-raised-button color="primary">modifica</button>
    </li>
  </ul>
+
+</div>

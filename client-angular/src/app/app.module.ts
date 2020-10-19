@@ -9,11 +9,17 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { NuovoComponent } from './nuovo/nuovo.component';
 
+//material
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'home/:id', component: HomeComponent},
-  { path: 'nuovo', component: NuovoComponent}
+//  { path: 'nuovo/:idUser/:idNota', component: NuovoComponent}
+{ path: 'nuovo', component: NuovoComponent}
   // { path: 'gioca/:id/:name', component: GiocaComponent}
  ];
 
@@ -29,7 +35,10 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    MatInputModule,
+    MatButtonModule,
+    BrowserAnimationsModule
   ],
   exports:[RouterModule],
   providers: [],

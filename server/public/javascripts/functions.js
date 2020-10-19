@@ -51,25 +51,16 @@ async function getList( db, res) {
                //console.log(result[0])
                var notes = [] = result;
                if(notes == null && notes.length===0 ){
+
                   res.ok = false;
                   //res.json({'email':"non ho trovato l'utente"});
                   res.status(400);
                   res.end();
                   console.log("non ho trovato impegni");
-               }else{
 
-                  /*for(var i =0; i<notes.length; i++){
-                     var id = result[i]._id;
-                     var idUser = result[i].idUser;
-                     var titolo = result[i].titolo;
-                     var note = result[i].note;
-                     var checked = result[i].checked;
-                  }*/
-               
+               }else{
+              
                   console.log("result "+notes.length);
-                  //console.log(notes);
-                  //currentUser = {id: id.toString(), nome:nome, email:email, password:password};
-                  //console.log("currentUser: "+ JSON.stringify(currentUser));
                   res.json({"notes":notes});
                   res.end('ok');
                  
@@ -87,11 +78,46 @@ async function getList( db, res) {
 async function eliminaTodo(id, db, res){
    console.log("elimina funcions");
    db.collection('note').deleteOne({ _id: ObjectID(id) });
+   //res.redirect('/home');
    res.end('ok');
 }
 
+async function aggiungiTodo(id, titolo, descrizione, db, res){
+   console.log("aggiungi funcions");
+   if(titolo === null || titolo === "")
+     res.end("bisogna inserire il titolo");
+   
+     db.collection('note').insertOne({
+       titolo: titolo,
+       idUser: id,
+       note: descrizione,
+       checked: false
+     }).then(function(){
+       res.redirect('/home');
+     });
+  // res.end('ok');
+}
+
+async function modificaTodo(id, titolo, descrizione, db, res){
+   console.log("modifica funcions");
+   if(titolo === null || titolo === "")
+     res.end("bisogna inserire il titolo");
+   
+     db.collection('note').updateOne(
+      { _id:ObjectID(id.trim()) },
+      {
+        $set: { 'titolo': titolo, 'note':descrizione },
+        $currentDate: { lastModified: true }
+      }).then(function(){
+       res.redirect('/home');
+       });
+
+   //res.end('ok');
+}
 
 
 module.exports.findUser = findUser;
 module.exports.getList = getList;
 module.exports.eliminaTodo = eliminaTodo;
+module.exports.aggiungiTodo = aggiungiTodo;
+module.exports.modificaTodo = modificaTodo;

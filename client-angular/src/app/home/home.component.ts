@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import {ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-home',
@@ -13,7 +13,10 @@ export class HomeComponent implements OnInit {
   userId: string;
   note:  Promise<any>|null = null;
  json: any=[];
-  
+ //titolo:string="null";
+ descrizione:string="null";
+ @Output() titolo:string = "null";
+ 
  constructor(private router: Router,private route: ActivatedRoute) {
     
     this.userId = this.route.snapshot.paramMap.get("id");
@@ -22,6 +25,7 @@ export class HomeComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    
   }
  
 
@@ -67,13 +71,17 @@ elimina(id:any){
     this.getLista();
 }
 
-modifica(id:any){
-  console.log("id: "+id);
-  
+modifica(id:any, titolo:any, descrizione:any){
+  console.log("id: "+id+ " titolo: "+titolo+" descrizione:"+descrizione);
+  this.titolo = titolo;
+  this.descrizione = descrizione;
+  this.router.navigateByUrl('/nuovo', { state: { idUser: this.userId, idNota: id, titolo: titolo, descrizione: descrizione } });
+ 
+   
 }
 
 aggiungiVai(){
-  this.router.navigate(['/nuovo',this.userId]); 
+  this.router.navigateByUrl('/nuovo', { state: { idUser: this.userId, idNota: 'null' } }); 
 }
 
 
