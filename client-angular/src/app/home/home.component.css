@@ -1,3 +1,11 @@
 .content{
    text-align: center;
 }
+
+.card{
+   width: 200px;
+}
+
+.example-spacer {
+   flex: 1 1 auto;
+ }

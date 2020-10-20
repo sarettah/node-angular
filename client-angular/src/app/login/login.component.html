@@ -1,15 +1,18 @@
 
 
 <div class="content" role="main">
-<h2>Login</h2>
+
    <!--<span>{{ title }} app is running!</span>-->
-   <br>
+   
   <!-- email:    <input type="text" id="email"  [(ngModel)]="email" [ngModelOptions]="{standalone: true}" >
    <br>
    password: <input type="text" id="password" [(ngModel)]="password"  [ngModelOptions]="{standalone: true}" >
    <br>
    <button (click)="login()">login</button>
    -->
+   <mat-card class="card">
+    <h2>Login</h2>
+    <br>
    <mat-form-field class="example-full-width">
       <mat-label  >Email</mat-label>
       <input matInput id="email" placeholder="" value=""  [(ngModel)]="email"  [ngModelOptions]="{standalone: true}">
@@ -20,6 +23,11 @@
       <input matInput id="password" placeholder="" value=""  [(ngModel)]="password"  [ngModelOptions]="{standalone: true}">
     </mat-form-field>
     <br>
-    <button mat-raised-button color="primary" (click)="login()">login</button>
+    <button mat-stroked-button color="primary" (click)="login()">Login</button>
+    <br>
+    <label>Non sei ancora registrato?  <button mat-button color="primary">Registrati</button> </label>
+  </mat-card>
+
+
 </div>
 

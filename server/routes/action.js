@@ -23,11 +23,11 @@ router.post('/', function(req, res, next) {
    }
    if(json.azione === "aggiungi"){
       //chiamare il db
-      functions.aggiungiTodo(json.id,json.titolo, json.descrizione, db, res)
+      functions.aggiungiTodo(json.id,json.titolo, json.descrizione, json.tipoLista, db, res)
    }
    if(json.azione === "modifica"){
       //chiamare il db
-      functions.modificaTodo(json.id,json.titolo, json.descrizione, db, res)
+      functions.modificaTodo(json.id,json.titolo, json.descrizione,json.tipoLista, db, res)
    }
 
  }); 

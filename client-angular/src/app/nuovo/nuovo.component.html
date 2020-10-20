@@ -1,27 +1,97 @@
 
 <div class="content">
 
+  <mat-toolbar color="primary">
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+     <mat-icon>menu</mat-icon>
+   </button>
+   <span>Lista impegni - {{azioneMenu}}</span>
+   <span class="example-spacer"></span>
+ </mat-toolbar>
+
+
 <!--<p>{{nuovo}}</p>-->
 <div class="nuovo" *ngIf="nuovo" >
   <h2>Inserisci la tua nuova Nota!</h2>
-<form class="example-form" >
-   <mat-form-field class="example-full-width">
-     <mat-label  >Titolo</mat-label>
-     <input matInput id="titolo" placeholder="" value=""  [(ngModel)]="titolo"  [ngModelOptions]="{standalone: true}">
-   </mat-form-field>
- <br>
-   <mat-form-field class="example-full-width">
-     <mat-label  >Descrizione</mat-label>
-     <input matInput id="descrizione" [(ngModel)]="descrizione"  [ngModelOptions]="{standalone: true}" >
-   </mat-form-field>
-<br>
-   <button mat-raised-button color="primary" (click)="salva()">Aggiungi</button> 
-  
- </form>
+  <br>
+  <br>
+  <mat-card class="card">
+    <form class="example-form" >
+      <mat-card-title> 
+        <mat-form-field class="example-full-width">
+         <mat-label  >titolo</mat-label>
+         <input matInput id="titolo" placeholder="" value=""  [(ngModel)]="titolo"  [ngModelOptions]="{standalone: true}">
+       </mat-form-field>
+      </mat-card-title>
+    <br>
+    <mat-card-subtitle>
+      <mat-form-field class="example-full-width">
+        <mat-label  >descrizione</mat-label>
+        <input matInput id="descrizione" placeholder="" [(ngModel)]="descrizione"  [ngModelOptions]="{standalone: true}" >
+      </mat-form-field>
+    </mat-card-subtitle>
+    <br>
+    <mat-card-subtitle>
+      <mat-form-field appearance="fill">
+        <mat-label>tipo di lista</mat-label>
+        <mat-select [(ngModel)]="tipoLista" [ngModelOptions]="{standalone: true}">
+          <mat-option *ngFor="let lista of liste" [value]="lista" >
+            {{lista}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-card-subtitle>
+    <br>
+    
+    <mat-card-actions>
+      <button mat-button (click)="aggiungi()">Aggiungi</button> 
+     </mat-card-actions>
+    </form>
+  </mat-card>
+
 </div>
 
 <div class="modifica" *ngIf="!nuovo">
   <h2>Modifica la tua Nota!</h2>
+  <br>
+  <br>
+  <mat-card class="card">
+    <form class="example-form" >
+      <mat-card-title> 
+        <mat-form-field class="example-full-width">
+         <mat-label  >titolo</mat-label>
+         <input matInput id="titolo" placeholder="" value=""  [(ngModel)]="titolo"  [ngModelOptions]="{standalone: true}">
+       </mat-form-field>
+      </mat-card-title>
+    <br>
+    <mat-card-subtitle>
+      <mat-form-field class="example-full-width">
+        <mat-label  >descrizione</mat-label>
+        <input matInput id="descrizione" placeholder="" [(ngModel)]="descrizione"  [ngModelOptions]="{standalone: true}" >
+      </mat-form-field>
+    </mat-card-subtitle>
+    <br>
+    <mat-card-subtitle>
+      <mat-form-field appearance="fill">
+        <mat-label>tipo di lista</mat-label>
+        <mat-select [(ngModel)]="tipoLista" [ngModelOptions]="{standalone: true}">
+          <mat-option *ngFor="let lista of liste" [value]="lista"   >
+            {{lista}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-card-subtitle>
+    <br>
+    <mat-card-actions>
+      <button mat-button (click)="modifica()">Salva</button> 
+     </mat-card-actions>
+    </form>
+  </mat-card>
+
+
+
+
+  <!--<h2>Modifica la tua Nota!</h2>
   <form class="example-form" >
      <mat-form-field class="example-full-width">
        <mat-label  >titolo:</mat-label>
@@ -35,6 +105,6 @@
   <br>
      <button mat-raised-button color="primary" (click)="modifica()">Salva</button> 
     
-   </form>
+   </form>-->
   </div>
   </div>

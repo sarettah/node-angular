@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Aggiungi una nuova lista</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Lista</mat-label>
+    <input matInput [(ngModel)]="data.listaNuova">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Chiudi</button>
+  <button mat-button [mat-dialog-close]="data.listaNuova" cdkFocusInitial>Salva</button>
+</div>

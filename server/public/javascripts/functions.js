@@ -1,13 +1,16 @@
 const { ObjectID } = require('mongodb');
 const path = require('path');
 var idCurrentUser;
+
+
+
 async function findUser( email, password, db, res) {
    if(email !==null && email !== "" && password !==null && password !== ""){
          console.log("campi validi")
          try {          
              console.log("cerco user in db");
              const query = {  email: email, password: password };
-             const projection = { _id: 1, nome: 1 };
+             const projection = { _id: 1, nome: 1 , liste:1};
              db.collection('users').find(query, { projection: projection } )
              .toArray(function(err, result) {
                if (err) throw err;
@@ -21,9 +24,10 @@ async function findUser( email, password, db, res) {
                }else{
                   var id = result[0]._id;
                   idCurrentUser = id;
-                  var nome = result[0].nome//result.projection.nome;
+                  var nome = result[0].nome;//result.projection.nome;
+                  var liste = result[0].liste;
                   //console.log("result: nome "+nome+ " + id "+id);
-                  currentUser = {id: id.toString(), nome:nome, email:email, password:password};
+                  currentUser = {id: id.toString(), nome:nome, email:email, password:password, liste:liste};
                   console.log("currentUser: "+ JSON.stringify(currentUser));
                   res.json(currentUser);
                   res.end('ok', currentUser);
@@ -82,7 +86,7 @@ async function eliminaTodo(id, db, res){
    res.end('ok');
 }
 
-async function aggiungiTodo(id, titolo, descrizione, db, res){
+async function aggiungiTodo(id, titolo, descrizione,tipoLista, db, res){
    console.log("aggiungi funcions");
    if(titolo === null || titolo === "")
      res.end("bisogna inserire il titolo");
@@ -91,6 +95,7 @@ async function aggiungiTodo(id, titolo, descrizione, db, res){
        titolo: titolo,
        idUser: id,
        note: descrizione,
+       lista: tipoLista,
        checked: false
      }).then(function(){
        res.redirect('/home');
@@ -98,7 +103,7 @@ async function aggiungiTodo(id, titolo, descrizione, db, res){
   // res.end('ok');
 }
 
-async function modificaTodo(id, titolo, descrizione, db, res){
+async function modificaTodo(id, titolo, descrizione, tipoLista,db, res){
    console.log("modifica funcions");
    if(titolo === null || titolo === "")
      res.end("bisogna inserire il titolo");
@@ -106,7 +111,7 @@ async function modificaTodo(id, titolo, descrizione, db, res){
      db.collection('note').updateOne(
       { _id:ObjectID(id.trim()) },
       {
-        $set: { 'titolo': titolo, 'note':descrizione },
+        $set: { 'titolo': titolo, 'note':descrizione, 'lista':tipoLista  },
         $currentDate: { lastModified: true }
       }).then(function(){
        res.redirect('/home');
@@ -114,6 +119,8 @@ async function modificaTodo(id, titolo, descrizione, db, res){
 
    //res.end('ok');
 }
+
+
 
 
 module.exports.findUser = findUser;
