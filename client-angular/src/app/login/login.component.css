@@ -1,16 +1,33 @@
 .content{
+   min-height: 100vh;
    text-align: center;
    background-color: #3f51b5;
    padding-bottom: 100px;
    padding-top: 100px;
+   box-sizing: border-box;
 }
 
 .card{
    margin: auto;
-   align-self:center;
-   text-align: center;
+
    width: 300px;
    height: 400px;
-   
-   
+}
+
+.left{
+   float: left;
+   margin-left: 25px;
+   margin-bottom: 10px;
+}
+
+mat-form-field{
+   width:250px;
+}
+
+.login{
+   margin-top: 10px;
+   width: 250px;
+}
+.registrati{
+   margin-top: 150pxr;
 }

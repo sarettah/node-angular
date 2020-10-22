@@ -16,7 +16,7 @@
 
  <mat-tab-group mat-align-tabs="center" (selectedTabChange)="tabClick($event)">
       <mat-tab label="Tutte">
-
+        <div class="flex" >
         <br>
         <br>
           <div *ngFor="let nota of note">
@@ -63,7 +63,7 @@
             </mat-card>-->
             <br>
        </div>
-
+      </div>
       </mat-tab>
       <mat-tab *ngFor="let lista of liste" [label]="lista"> 
         

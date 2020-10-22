@@ -23,6 +23,7 @@ import {  MatSelectModule } from '@angular/material/select';
 import {  MatFormFieldModule } from '@angular/material/form-field';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { DialogListeComponent } from './dialog-liste/dialog-liste.component';
+//import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 const routes: Routes = [
@@ -58,6 +59,7 @@ const routes: Routes = [
     MatSelectModule,
     MatFormFieldModule,
     MatExpansionModule,
+  //  FlexLayoutModule,
     BrowserAnimationsModule
   ],
   exports:[RouterModule],

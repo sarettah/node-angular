@@ -29,6 +29,10 @@ router.post('/', function(req, res, next) {
       //chiamare il db
       functions.modificaTodo(json.id,json.titolo, json.descrizione,json.tipoLista, db, res)
    }
+   if(json.azione === "addLista"){
+      //chiamare il db
+      functions.addLista(json.id,json.listaNuova,  db, res)
+   }
 
  }); 
 

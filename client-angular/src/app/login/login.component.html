@@ -23,9 +23,15 @@
       <input matInput id="password" placeholder="" value=""  [(ngModel)]="password"  [ngModelOptions]="{standalone: true}">
     </mat-form-field>
     <br>
-    <button mat-stroked-button color="primary" (click)="login()">Login</button>
+    <!--<label class="left" mat-button>Forgot password?</label>-->
     <br>
-    <label>Non sei ancora registrato?  <button mat-button color="primary">Registrati</button> </label>
+    <button class="login" mat-stroked-button color="primary" (click)="login()">Login</button>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <label class="registrati">Non sei ancora registrato? <button mat-button color="primary">Registrati</button> </label>
   </mat-card>
 
 

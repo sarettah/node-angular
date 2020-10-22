@@ -23,8 +23,8 @@ export class HomeComponent implements OnInit {
   urlServer = 'http://localhost:3000';
   userId: string;
   note:  Promise<any>|null = null;
-  liste: Promise<String>|null = null;
-  json: any=[];
+  liste: Promise<string[]>|null = null;
+ // json: any=[];
   //titolo:string="null";
   descrizione:string="null";
   titolo:string = "null";
@@ -61,9 +61,15 @@ export class HomeComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.listaNuova = result;
-      this.addListaNuova();
+      console.log('The dialog was closed '+result);
+      if(result == null || result === null || result ==""){
+        
+      }else{
+        this.listaNuova = result;
+        this.addListaNuova();
+      }
+      
+
     });
   }
 
@@ -122,8 +128,24 @@ creaLista(){
 }
 
 addListaNuova(){
-console.log("nuovalista" + this.listaNuova);
+console.log("nuovalista " + this.listaNuova);
 
+fetch(this.urlServer+'/action', { method: 'POST',body: JSON.stringify({id: this.userId.toString(), azione: "addLista", listaNuova: this.listaNuova}) }) //, body: JSON.stringify({id: this.userId}) }) 
+      .then( async function (res) {
+        console.log(res);
+        if (res.ok) {
+          //vul dire che la chiamata è andata bene e l'utente è stato trovato 
+          console.log("lista aggiunta");
+          return await res.json();
+        }else {
+          console.log("errore nell'aggiunta");
+        }
+      })
+      .then(data => this.liste = data.liste)
+      .then(()=>{
+        //routerS.navigate(['/home',this.userId]); 
+        this.router.navigateByUrl('/home', { state: { id: this.userId, liste:this.liste } });
+      }); 
 
 
 }

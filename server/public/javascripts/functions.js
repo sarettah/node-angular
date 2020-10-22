@@ -120,6 +120,47 @@ async function modificaTodo(id, titolo, descrizione, tipoLista,db, res){
    //res.end('ok');
 }
 
+async function addLista(id, listaNuova, db, res){
+   //console.log("aggiungi lista "+listaNuova);
+   if(listaNuova === null || listaNuova === "" || listaNuova == null)
+     res.end("bisogna inserire il nome della lista");
+     
+     db.collection('users').updateOne(
+         {_id: ObjectID(id.trim())},
+         {
+            $push: {
+               liste : listaNuova
+            }
+         }
+      ).then(()=>{
+
+         const query = {  _id : ObjectID(id.trim()) };
+         const projection = {  liste:1};
+         db.collection('users').find(query, { projection: projection } )
+         .toArray(function(err, result) {
+           if (err) throw err;
+           //console.log(result[0])
+           if(typeof result[0] === 'undefined' ){
+              res.ok = false;
+              //res.json({'email':"non ho trovato l'utente"});
+              res.status(400);
+              res.end();
+              console.log("non ho trovato le liste");
+           }else{
+              var liste = result[0].liste;
+              console.log("liste: "+ JSON.stringify({liste:liste}));
+              res.json({liste:liste});
+              res.end('ok');
+             
+           }
+        })
+
+      });
+
+
+
+   //res.end('ok');
+}
 
 
 
@@ -128,3 +169,4 @@ module.exports.getList = getList;
 module.exports.eliminaTodo = eliminaTodo;
 module.exports.aggiungiTodo = aggiungiTodo;
 module.exports.modificaTodo = modificaTodo;
+module.exports.addLista = addLista;
