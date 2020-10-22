@@ -6,7 +6,7 @@ import { DialogListeComponent } from '../dialog-liste/dialog-liste.component';
 
 export interface DialogData {
   message: string;
-  elimina: boolean;
+  eliminaB: boolean;
   idNota: string;
 }
 export interface DialogDataListe {
@@ -22,16 +22,27 @@ export class HomeComponent implements OnInit {
 
   urlServer = 'http://localhost:3000';
   userId: string;
-  note:  Promise<any>|null = null;
-  liste: Promise<string[]>|null = null;
+  //note:  Promise<any>|null = null;
+  liste:  Promise<any>[]|string[];
  // json: any=[];
   //titolo:string="null";
   descrizione:string="null";
   titolo:string = "null";
  
   message:string;
+  eliminaB:boolean;
   idNota:string;
   listaNuova:string;
+
+  //divisione delle note per lista
+  noteAll : Promise<any>[]|any[];
+  notePerLista : Promise<any>[]|any[] = [];
+  currentTab: number = 0;
+ /* note2 : Promise<any>[]|any[];
+  note3 : Promise<any>[]|any[];
+  note4 : Promise<any>[]|any[];
+  note5 : Promise<any>[]|any[];*/
+
 
  constructor(private router: Router,private route: ActivatedRoute, public dialog: MatDialog) {
     this.userId = this.router.getCurrentNavigation().extras.state.id;
@@ -46,7 +57,7 @@ export class HomeComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '250px',
-      data: {message: this.message, elimina:true, idNota:this.idNota }
+      data: {message: this.message, elimina: this.eliminaB, idNota:this.idNota }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -94,13 +105,14 @@ getListaNote(){
       } else {
         console.log("errore o impegni non trovtai!");
       }
-    }).then(data => this.note = data.notes); //setto la variabile globale!
+    })
+    .then(data => this.noteAll = data.notes); //setto la variabile globale!
 }
-
 
 elimina(id:any){
   this.message="Vuoi eliminare l'impegno?";
   this.idNota = id;
+  this.eliminaB = true;
   this.openDialog();
 }
 
@@ -116,15 +128,40 @@ aggiungiVai(){
   this.router.navigateByUrl('/nuovo', { state: { idUser: this.userId, idNota: 'null', liste: this.liste } }); 
 }
 
-
+//divede per lista le note in base al tab selezionato
 tabClick(tab) {
-  console.log(tab.index);
-
+  console.log(tab.index+" - "+tab.tab.textLabel);
+  if(this.currentTab !== tab.index){
+    this.notePerLista = [];
+  }
+  if(tab.index===0){
+    this.notePerLista = [];
+  }else{
+    for(var i=0; i<this.noteAll.length; i++){
+      var nota = this.noteAll[i];
+      console.log(nota.titolo);
+      if(nota.lista ===tab.tab.textLabel){
+        console.log(nota.lista);
+        this.notePerLista.push(nota);
+      }
+    }
+  }
 }
 
 creaLista(){
   console.log("creaLista");
-  this.openDialogListe();
+  if( this.noteAll.length < 6 ){
+    this.openDialogListe();
+  }else{
+    this.eliminaB=false;
+    this.message = "Puoi creare solo da 1 a 5 liste"
+    this.openDialog();
+  }
+  
+}
+
+eliminaLista(){
+  console.log("eliminaLista");
 }
 
 addListaNuova(){
