@@ -90,7 +90,7 @@ async function aggiungiTodo(id, titolo, descrizione,tipoLista, db, res){
    console.log("aggiungi funcions");
    if(titolo === null || titolo === "")
      res.end("bisogna inserire il titolo");
-   
+   else{
      db.collection('note').insertOne({
        titolo: titolo,
        idUser: id,
@@ -100,6 +100,7 @@ async function aggiungiTodo(id, titolo, descrizione,tipoLista, db, res){
      }).then(function(){
        res.redirect('/home');
      });
+   }
   // res.end('ok');
 }
 
@@ -107,7 +108,7 @@ async function modificaTodo(id, titolo, descrizione, tipoLista,db, res){
    console.log("modifica funcions");
    if(titolo === null || titolo === "")
      res.end("bisogna inserire il titolo");
-   
+   else{
      db.collection('note').updateOne(
       { _id:ObjectID(id.trim()) },
       {
@@ -116,7 +117,7 @@ async function modificaTodo(id, titolo, descrizione, tipoLista,db, res){
       }).then(function(){
        res.redirect('/home');
        });
-
+   }
    //res.end('ok');
 }
 
@@ -124,7 +125,7 @@ async function addLista(id, listaNuova, db, res){
    //console.log("aggiungi lista "+listaNuova);
    if(listaNuova === null || listaNuova === "" || listaNuova == null)
      res.end("bisogna inserire il nome della lista");
-     
+   else{
      db.collection('users').updateOne(
          {_id: ObjectID(id.trim())},
          {
@@ -156,13 +157,51 @@ async function addLista(id, listaNuova, db, res){
         })
 
       });
-
-
-
-   //res.end('ok');
+   }
 }
 
 
+async function deleteLista(id, listaEliminata, db, res){
+   //console.log("aggiungi lista "+listaNuova);
+   console.log("lista da eliminare "+listaEliminata);
+
+   if(listaEliminata === null || listaEliminata === "" || listaEliminata == null)
+     res.end("bisogna inserire il nome della lista");
+   else{
+     
+     db.collection('users').updateOne(
+         {_id: ObjectID(id.trim())},
+         {
+            $pull: {
+               liste :  { $in : [ listaEliminata ] }
+            }
+         }
+      ).then(()=>{
+
+         const query = {  _id : ObjectID(id.trim()) };
+         const projection = {  liste:1};
+         db.collection('users').find(query, { projection: projection } )
+         .toArray(function(err, result) {
+           if (err) throw err;
+           //console.log(result[0])
+           if(typeof result[0] === 'undefined' ){
+              res.ok = false;
+              //res.json({'email':"non ho trovato l'utente"});
+              res.status(400);
+              res.end();
+              console.log("non ho trovato le liste");
+           }else{
+              var liste = result[0].liste;
+              console.log("liste: "+ JSON.stringify({liste:liste}));
+              res.json({liste:liste});
+              res.end('ok');
+             
+           }
+        })
+
+      });
+   }
+}
 
 module.exports.findUser = findUser;
 module.exports.getList = getList;
@@ -170,3 +209,4 @@ module.exports.eliminaTodo = eliminaTodo;
 module.exports.aggiungiTodo = aggiungiTodo;
 module.exports.modificaTodo = modificaTodo;
 module.exports.addLista = addLista;
+module.exports.deleteLista = deleteLista;

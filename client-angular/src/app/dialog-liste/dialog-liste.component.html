@@ -1,4 +1,6 @@
-<h1 mat-dialog-title>Aggiungi una nuova lista</h1>
+
+<div *ngIf="(crea)">
+<h1 mat-dialog-title >Aggiungi una nuova lista</h1>
 <div mat-dialog-content>
   <mat-form-field>
     <mat-label>Lista</mat-label>
@@ -9,3 +11,22 @@
   <button mat-button (click)="onNoClick()">Chiudi</button>
   <button mat-button [mat-dialog-close]="data.listaNuova" cdkFocusInitial>Salva</button>
 </div>
+</div>
+
+<div *ngIf="(!crea)">
+  <h1 mat-dialog-title >Elimina una lista</h1>
+  <div mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Lista</mat-label>
+      <mat-select [(ngModel)]="data.listaNuova" [ngModelOptions]="{standalone: true}">
+        <mat-option *ngFor="let lista of liste" [value]="lista"   >
+          {{lista}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Chiudi</button>
+    <button mat-button [mat-dialog-close]="data.listaNuova" cdkFocusInitial >Elimina</button>
+  </div>
+  </div>

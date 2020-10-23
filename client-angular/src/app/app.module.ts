@@ -24,7 +24,7 @@ import {  MatFormFieldModule } from '@angular/material/form-field';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { DialogListeComponent } from './dialog-liste/dialog-liste.component';
 import { MatGridListModule } from '@angular/material/grid-list';
-
+import { NgxMasonryModule } from 'ngx-masonry';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
@@ -60,6 +60,7 @@ const routes: Routes = [
     MatFormFieldModule,
     MatExpansionModule,
     MatGridListModule,
+    NgxMasonryModule,
     BrowserAnimationsModule
   ],
   exports:[RouterModule],

@@ -5,16 +5,29 @@
 
 .card{
    width: 200px;
-   /*margin-left: 20px;*/
+   margin: 20px;
+
 }
+
+
 
 .example-spacer {
    flex: 1 1 auto;
  }
 
- mat-card-title,mat-panel-description{
+ mat-card-title,mat-card-subtitle{
    word-wrap: break-word;
    overflow-wrap: break-word;
    width: 100%;
    white-space: normal;
+ }
+
+ .card-title,.panel-description{
+   word-wrap: break-word;
+   overflow-wrap: break-word;
+   width: 100%;
+   /*white-space: normal;*/
+   white-space:nowrap;
+   text-overflow:ellipsis;
+   overflow:hidden;
  }

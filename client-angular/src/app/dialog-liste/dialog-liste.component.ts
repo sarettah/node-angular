@@ -13,10 +13,12 @@ export class DialogListeComponent implements OnInit {
 
   urlServer = 'http://localhost:3000';
   //listaNuova:string;
-
+  crea:boolean;
+  liste:string[];
  constructor( public dialogRef: MatDialogRef<DialogListeComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogDataListe) { 
-      
+      this.crea = this.data.crea;
+      this.liste = this.data.liste;
     
     }
 

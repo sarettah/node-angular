@@ -33,7 +33,10 @@ router.post('/', function(req, res, next) {
       //chiamare il db
       functions.addLista(json.id,json.listaNuova,  db, res)
    }
-
+   if(json.azione === "deleteLista"){
+      //chiamare il db
+      functions.deleteLista(json.id,json.listaEliminata,  db, res)
+   }
  }); 
 
 });
