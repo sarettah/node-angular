@@ -3,7 +3,6 @@ const path = require('path');
 var idCurrentUser;
 
 
-
 async function findUser( email, password, db, res) {
    if(email !==null && email !== "" && password !==null && password !== ""){
          console.log("campi validi")
@@ -49,7 +48,7 @@ async function getList( db, res) {
              console.log("cerco lista todo in db per utente "+idCurrentUser);
              const query = {  idUser: idCurrentUser.toString() };
              const projection = { _id: 1, idUser:1, titolo: 1, note:1, checked:1 };
-             db.collection('note').find(query)//, { projection: projection } )
+             db.collection('note').find(query).sort({ data: -1 })//, { projection: projection } )
              .toArray(function(err, result) {
                if (err) throw err;
                //console.log(result[0])
@@ -86,7 +85,7 @@ async function eliminaTodo(id, db, res){
    res.end('ok');
 }
 
-async function aggiungiTodo(id, titolo, descrizione,tipoLista, db, res){
+async function aggiungiTodo(id, titolo, descrizione,tipoLista,data, db, res){
    console.log("aggiungi funcions");
    if(titolo === null || titolo === "")
      res.end("bisogna inserire il titolo");
@@ -96,6 +95,7 @@ async function aggiungiTodo(id, titolo, descrizione,tipoLista, db, res){
        idUser: id,
        note: descrizione,
        lista: tipoLista,
+       data: data,
        checked: false
      }).then(function(){
        res.redirect('/home');
@@ -104,15 +104,16 @@ async function aggiungiTodo(id, titolo, descrizione,tipoLista, db, res){
   // res.end('ok');
 }
 
-async function modificaTodo(id, titolo, descrizione, tipoLista,db, res){
+async function modificaTodo(id, titolo, descrizione, tipoLista, data, db, res){
    console.log("modifica funcions");
    if(titolo === null || titolo === "")
      res.end("bisogna inserire il titolo");
    else{
+      
      db.collection('note').updateOne(
       { _id:ObjectID(id.trim()) },
       {
-        $set: { 'titolo': titolo, 'note':descrizione, 'lista':tipoLista  },
+        $set: { 'titolo': titolo, 'note':descrizione, 'lista':tipoLista , 'data': data },
         $currentDate: { lastModified: true }
       }).then(function(){
        res.redirect('/home');
@@ -176,7 +177,15 @@ async function deleteLista(id, listaEliminata, db, res){
                liste :  { $in : [ listaEliminata ] }
             }
          }
-      ).then(()=>{
+      ).then(()=>{ //cambio a "" tutte le note che avevano la lista eliminata
+         db.collection('note').updateOne(
+            { lista: listaEliminata },
+            {
+            $set: {  'lista':""  },
+            $currentDate: { lastModified: true }
+            })
+      })
+      .then(()=>{ //ritorno le liste
 
          const query = {  _id : ObjectID(id.trim()) };
          const projection = {  liste:1};

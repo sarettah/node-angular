@@ -4,6 +4,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import { DialogComponent } from '../dialog/dialog.component';
 import { DialogListeComponent } from '../dialog-liste/dialog-liste.component';
 
+
 export interface DialogData {
   message: string;
   eliminaB: boolean;
@@ -24,6 +25,7 @@ export class HomeComponent implements OnInit {
 
   urlServer = 'http://localhost:3000';
   userId: string;
+  nomeUSER:string;
   //note:  Promise<any>|null = null;
   liste:  Promise<any>[]|string[];
  // json: any=[];
@@ -46,9 +48,13 @@ export class HomeComponent implements OnInit {
   note4 : Promise<any>[]|any[];
   note5 : Promise<any>[]|any[];*/
 
+  ///cose da fare:
+  //aggiungere il giorno alle note
+  //visualizzarle dalla più recente alla più lontana!
 
  constructor(private router: Router,private route: ActivatedRoute, public dialog: MatDialog) {
     this.userId = this.router.getCurrentNavigation().extras.state.id;
+    this.nomeUSER = this.router.getCurrentNavigation().extras.state.nome;
     this.liste = this.router.getCurrentNavigation().extras.state.liste;
     //scarico la lista dei todo
     this.getListaNote()
@@ -64,15 +70,18 @@ export class HomeComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      var index = this.noteAll.findIndex(x => x._id === this.idNota);
-      console.log("index: "+index)
-      if (index > -1) {
-        this.noteAll.splice(index, 1);
-        this.idNota="";
-        console.log("length noteAll: "+ this.noteAll.length);
+      console.log('The dialog was closed '+result);
+      if(result != null && result==="eliminaClicked"){
+        var index = this.noteAll.findIndex(x => x._id === this.idNota);
+        console.log("index: "+index)
+        if (index > -1) {
+          this.noteAll.splice(index, 1);
+          this.idNota="";
+          console.log("length noteAll: "+ this.noteAll.length);
+        }
+      }else{
+        console.log("COSA")
       }
-      
       //this.getListaNote();
     });
   }
@@ -84,7 +93,7 @@ export class HomeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed '+result);
-      if(result == null || result === null || result ==""){
+      if(result == null || result === null || result ===""){
         
       }else{
         if(this.creaB){
@@ -134,15 +143,15 @@ elimina(id:any){
 }
 
 
-modificaVai(id:any, titolo:any, descrizione:any, tipoLista:string){
+modificaVai(id:any, titolo:any, descrizione:any, tipoLista:string, data:any){
   console.log("id: "+id+ " titolo: "+titolo+" descrizione:"+descrizione);
   this.titolo = titolo;
   this.descrizione = descrizione;
-  this.router.navigateByUrl('/nuovo', { state: { idUser: this.userId, idNota: id, titolo: titolo, descrizione: descrizione,tipoLista:tipoLista, liste: this.liste } });
+  this.router.navigateByUrl('/nuovo', { state: { idUser: this.userId, idNota: id, titolo: titolo, descrizione: descrizione,tipoLista:tipoLista, liste: this.liste, data:data, nome:this.nomeUSER  } });
 }
 
 aggiungiVai(){
-  this.router.navigateByUrl('/nuovo', { state: { idUser: this.userId, idNota: 'null', liste: this.liste } }); 
+  this.router.navigateByUrl('/nuovo', { state: { idUser: this.userId, idNota: 'null', liste: this.liste, nome:this.nomeUSER } }); 
 }
 
 //divede per lista le note in base al tab selezionato

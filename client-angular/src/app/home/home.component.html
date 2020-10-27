@@ -4,7 +4,7 @@
     <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" >
      <mat-icon>menu</mat-icon>
    </button>
-   <span>Lista impegni</span>
+   <span>Lista impegni - {{nomeUSER}}</span>
    <span class="example-spacer"></span>
    <button mat-icon-button (click)="aggiungiVai()" class="example-icon favorite-icon"  matTooltip="Aggiungi Nota" aria-label="Example icon-button with heart icon">
      <mat-icon>add</mat-icon>
@@ -35,7 +35,7 @@
               <br><br>
               Lista: {{nota.lista}}
               <br>
-              Giorno:
+              Giorno: {{nota.data  | date:'dd-MM-yyyy'}}
               <!--<mat-expansion-panel hideToggle class="mat-elevation-z0">
                 <mat-expansion-panel-header>
                   <mat-panel-description>
@@ -48,7 +48,7 @@
 
             </mat-card-subtitle>
             <mat-card-actions>
-              <button mat-button color="primary" (click)="modificaVai(nota._id, nota.titolo, nota.note, nota.lista)" >MODIFICA</button>
+              <button mat-button color="primary" (click)="modificaVai(nota._id, nota.titolo, nota.note, nota.lista, nota.data)" >MODIFICA</button>
               <button mat-button color="primary" (click)="elimina(nota._id)" >ELIMINA</button>
             </mat-card-actions>
             </mat-card>
@@ -75,11 +75,11 @@
                 <br><br>
                 Lista: {{notaPerLista.lista}}
                 <br>
-                Giorno: 
+                Giorno: {{notaPerLista.data | date:'dd-MM-yyyy'}}
   
               </mat-card-subtitle>
               <mat-card-actions>
-                <button mat-button color="primary" (click)="modificaVai(notaPerLista._id, notaPerLista.titolo, notaPerLista.note, notaPerLista.lista)" >MODIFICA</button>
+                <button mat-button color="primary" (click)="modificaVai(notaPerLista._id, notaPerLista.titolo, notaPerLista.note, notaPerLista.lista, notaPerLista.data)" >MODIFICA</button>
                 <button mat-button color="primary" (click)="elimina(notaPerLista._id)" >ELIMINA</button>
               </mat-card-actions>
               </mat-card>
@@ -87,6 +87,7 @@
               <br>
          </mat-grid-tile>
         </mat-grid-list>
+        
 
       </mat-tab> 
       <br>

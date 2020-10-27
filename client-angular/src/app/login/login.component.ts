@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit {
             //console.log(data.id); 
             
             console.log("vado alla home");
-            routerL.navigateByUrl('/home', { state: { id: data.id, liste: data.liste } });
+            routerL.navigateByUrl('/home', { state: { id: data.id, liste: data.liste , nome: data.nome} });
             //routerL.navigate(['/home', data.id]); 
     
           })

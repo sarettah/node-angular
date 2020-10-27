@@ -10,10 +10,12 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 export class DialogComponent implements OnInit {
 
   urlServer = 'http://localhost:3000';
-
+ // eliminaClicked : boolean = false;
+  elimina:boolean;
   constructor( public dialogRef: MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { 
-      
+     
+      this.elimina = this.data.elimina;
     
     }
 
@@ -23,7 +25,8 @@ export class DialogComponent implements OnInit {
       
     }
 
-  elimina(){
+  eliminaClick(){
+    //this.eliminaB=true;
     console.log('ELIMINA')
     console.log("id: "+this.data.idNota.toString());
       fetch(this.urlServer+'/action', { method: 'POST',body: JSON.stringify({id: this.data.idNota.toString(), azione: "elimina"}) }) //, body: JSON.stringify({id: this.userId}) }) 
@@ -37,7 +40,7 @@ export class DialogComponent implements OnInit {
             console.log("errore nell'eliminazione");
           }
         }); 
-        this.dialogRef.close();
+        this.dialogRef.close("eliminaClicked");
   }
 
   ngOnInit(): void {

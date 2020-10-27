@@ -4,5 +4,5 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Chiudi</button>
-  <button *ngIf="data.elimina" mat-button (click)="elimina()">Elimina</button>
+  <button *ngIf="data.elimina" mat-button (click)="eliminaClick()"  cdkFocusInitial>Elimina</button>
 </div>

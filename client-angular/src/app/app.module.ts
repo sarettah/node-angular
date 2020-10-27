@@ -25,6 +25,11 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { DialogListeComponent } from './dialog-liste/dialog-liste.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { NgxMasonryModule } from 'ngx-masonry';
+import {MatNativeDateModule} from '@angular/material/core';
+import { MatDatepickerModule } from "@angular/material/datepicker";
+//import { NativeDateAdapter } from '@angular/material/core';
+//import { MatDateFormats } from '@angular/material/core';
+
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
@@ -61,6 +66,10 @@ const routes: Routes = [
     MatExpansionModule,
     MatGridListModule,
     NgxMasonryModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    //NativeDateAdapter,
+    //MatDateFormats,
     BrowserAnimationsModule
   ],
   exports:[RouterModule],
